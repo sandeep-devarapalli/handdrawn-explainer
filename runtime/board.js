@@ -174,6 +174,8 @@ async function mount(container,scene,opts){
   opts=Object.assign({format:'wide',lang:(scene.languages||['en'])[0],timing:null,cut:null,font:(scene.style&&scene.style.font)||'Kalam',subtitles:true},opts||{});
   injectCSS();
   const hasMath=scene.beats.some(b=>(b.draw||[]).some(e=>e.type==='math'));
+  // fonts first: text widths are measured at mount, and a fallback font measures narrower than the handwriting
+  try{if(document.fonts){await Promise.race([Promise.all([document.fonts.load(`400 40px "${opts.font}"`),document.fonts.load(`700 40px "${opts.font}"`),document.fonts.ready]),new Promise(r=>setTimeout(r,6000))])}}catch(e){}
   const mathOK=hasMath?await mathReady(opts.mathTimeout):false;
   const mathCache=mathOK?await renderMathCache(scene):null;
   const c=compile(scene,Object.assign({mathCache},opts),mathOK);
@@ -219,7 +221,7 @@ async function mount(container,scene,opts){
   let prev=full;beats.forEach(b=>{b.camBox=b.camera==='fit'?fitBox(b):b.camera==='full'?full:prev;b.camFrom=prev;prev=b.camBox});
   const beatAt=t=>{for(let i=beats.length-1;i>=0;i--)if(t>=beats[i].start)return i;return -1};
   const apply=(v,k)=>{if(v.k===k)return;v.k=k;const el=v.el;
-    if(el.type==='path')v.node.style.strokeDashoffset=((el.len+2)*(1-k)).toFixed(2);
+    if(el.type==='path'){v.node.style.strokeDashoffset=((el.len+2)*(1-k)).toFixed(2);v.node.style.visibility=k<=0?'hidden':'visible'}
     else if(el.type==='math')v.clip.setAttribute('width',k<=0?0:(el.wpx*k+10).toFixed(1));
     else v.clip.setAttribute('width',k<=0?0:(el.tw*k+6).toFixed(1))};
   const tipOf=(el,k)=>{if(el.type==='path')return pointAt(el.spts,el.len*k);if(el.type==='math')return [el.x+el.wpx*k,el.y-el.hpx*0.3];
