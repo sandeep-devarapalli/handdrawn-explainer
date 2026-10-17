@@ -39,7 +39,9 @@ node $S/render.mjs lessons/fk-two-link/build/preview.html --format wide --lang e
 node $S/render.mjs lessons/fk-two-link/build/preview.html --format tall --lang en --cut short-fk
 ```
 
-narrate.mjs only calls the API for beats whose text or voice settings changed (content hash cache). `--force` resynthesises everything.
+narrate.mjs only calls the API for beats whose text or voice settings changed (content hash cache). `--force` resynthesises everything. The clips are plain WAVs in `build/audio/<lang>/<beat-id>.wav`, so you can listen to any one directly.
+
+After narrate, `build.mjs` makes a preview that plays the narration in sync with the drawing (Narration checkbox under the board). It references the clips by relative path, so open `build/preview.html` from where it is. To share or publish a single file with sound, build with `--inline-audio` (clips become mp3 data URIs, roughly 0.5 MB per minute).
 
 render.mjs drives the page frame by frame (`window.board.seek(t)`), so output is deterministic and the preview is exactly what ships. 30 fps, H.264, CRF 18, AAC 160k. A 100-second lesson takes a few minutes to render.
 

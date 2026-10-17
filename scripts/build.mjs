@@ -6,6 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
 
 const args=process.argv.slice(2);
 const opt=(k,d)=>{const i=args.indexOf(k);return i>=0?args[i+1]:d};
@@ -17,12 +18,25 @@ const runtime=fs.readFileSync(path.join(here,'..','runtime','board.js'),'utf8');
 const outPath=opt('--out',path.join(path.dirname(scenePath),'build','preview.html'));
 const timingDir=opt('--timing',path.join(path.dirname(scenePath),'build'));
 const mathjax=opt('--mathjax','cdn');
+const inlineAudio=args.includes('--inline-audio');
 
 // timing files produced by narrate.mjs: timing.<lang>.json
 const timing={};
 for(const lang of scene.languages||['en']){
   const p=path.join(timingDir,`timing.${lang}.json`);
-  if(fs.existsSync(p))timing[lang]=JSON.parse(fs.readFileSync(p,'utf8'));
+  if(!fs.existsSync(p))continue;
+  const t=JSON.parse(fs.readFileSync(p,'utf8'));
+  for(const id in t.beats){
+    const b=t.beats[id];const wav=path.join(timingDir,b.audio);
+    if(!fs.existsSync(wav)){b.src=null;continue}
+    if(inlineAudio){
+      const mp3=wav.replace(/\.wav$/,'.mp3');
+      const r=spawnSync('ffmpeg',['-y','-loglevel','error','-i',wav,'-codec:a','libmp3lame','-b:a','64k','-ac','1',mp3]);
+      if(r.status!==0){console.warn('could not encode',wav,'to mp3; referencing the wav instead');b.src=path.relative(path.dirname(outPath),wav).split(path.sep).join('/')}
+      else b.src='data:audio/mpeg;base64,'+fs.readFileSync(mp3).toString('base64');
+    }else b.src=path.relative(path.dirname(outPath),wav).split(path.sep).join('/');
+  }
+  timing[lang]=t;
 }
 const hasMath=scene.beats.some(b=>(b.draw||[]).some(e=>e.type==='math'));
 const font=(scene.style&&scene.style.font)||'Kalam';
@@ -86,6 +100,7 @@ ${subFontRule}
   <label>Language <select id="lang"></select></label>
   <label>Handwriting <select id="font"><option>Kalam</option><option>Patrick Hand</option><option>Architects Daughter</option><option>Gloria Hallelujah</option><option>Caveat</option></select></label>
   <label>Cut <select id="cut"><option value="">full</option></select></label>
+  <label><input type="checkbox" id="audio" checked> Narration</label>
 </div>
 <div class="caption" id="caption"></div>
 <div class="timing-note" id="timing-note"></div>
@@ -106,15 +121,25 @@ const TIMING=${esc(JSON.stringify(timing))};
   Object.keys(SCENE.cuts||{}).forEach(c=>cutSel.add(new Option(c,c,false,c===state.cut)));
   fontSel.value=state.font;
   const btn=document.getElementById('play'),scrub=document.getElementById('scrub'),time=document.getElementById('time'),cap=document.getElementById('caption'),note=document.getElementById('timing-note');
-  let board=null,scrubbing=false;
+  let board=null,scrubbing=false,rate=1;
+  const audioEl=new Audio();let audioBeat=-1;const audioOn=document.getElementById('audio');
+  function syncAudio(t,bi,stopped){
+    const tm=TIMING[state.lang];
+    if(!tm||!audioOn.checked||stopped||!board.playing||bi<0){audioEl.pause();audioBeat=-1;return}
+    const b=board.beats[bi];const clip=tm.beats[b.id];const off=t-b.start;
+    if(!clip||!clip.src||off>clip.dur){audioEl.pause();audioBeat=-1;return}
+    if(audioBeat!==bi){audioBeat=bi;audioEl.src=clip.src;audioEl.playbackRate=rate;audioEl.currentTime=off;audioEl.play().catch(()=>{})}
+  }
   async function mountBoard(){
     if(board)board.pause();
     boardEl.dataset.format=state.format;boardEl.dataset.lang=state.lang;
     const timing=TIMING[state.lang]||null;
     boardEl.innerHTML='<div style="position:absolute;inset:0;display:grid;place-items:center;color:#777;font:20px Kalam,sans-serif">Loading the board…</div>';
     board=await HandBoard.mount(boardEl,SCENE,{format:state.format,lang:state.lang,cut:state.cut,font:state.font,timing});
-    note.textContent=timing?'Timing: from narration audio ('+state.lang+').':'Timing: stroke-driven (no narration yet). Run narrate.mjs to time beats from audio.';
+    note.textContent=timing?'Timing: from narration audio ('+state.lang+', '+timing.engine+'). Press Play to hear it.':'Timing: stroke-driven (no narration yet). Run narrate.mjs to time beats from audio.';
+    audioOn.disabled=!timing;
     board.onTick((t,bi,stopped)=>{
+      syncAudio(t,bi,stopped);
       if(!scrubbing)scrub.value=Math.round(t/board.total*1000);time.textContent=t.toFixed(1)+' s';
       btn.textContent=board.playing?'Pause':(t>=board.total?'Play again':'Play');
       cap.innerHTML=bi<0?'':'<strong>'+(bi+1)+' of '+board.beats.length+':</strong> '+board.beats[bi].title;
@@ -125,8 +150,9 @@ const TIMING=${esc(JSON.stringify(timing))};
   try{await mountBoard()}catch(err){boardEl.innerHTML='<div style="position:absolute;inset:0;display:grid;place-items:center;color:#ddd;font:18px Kalam,sans-serif;padding:24px;text-align:center">Could not build the board: '+String(err.message||err).replace(/</g,'&lt;')+'</div>';console.error(err);return}
   btn.onclick=()=>board.toggle();
   document.getElementById('restart').onclick=()=>{board.pause();board.seek(0);board.play()};
-  document.getElementById('speed').onchange=e=>board.setSpeed(+e.target.value);
-  scrub.oninput=e=>{scrubbing=true;board.seek(+e.target.value/1000*board.total)};scrub.onchange=()=>{scrubbing=false};
+  document.getElementById('speed').onchange=e=>{rate=+e.target.value;board.setSpeed(rate);audioEl.playbackRate=rate};
+  audioOn.onchange=()=>{if(!audioOn.checked){audioEl.pause();audioBeat=-1}};
+  scrub.oninput=e=>{scrubbing=true;audioEl.pause();audioBeat=-1;board.seek(+e.target.value/1000*board.total)};scrub.onchange=()=>{scrubbing=false};
   fmtSel.onchange=e=>{state.format=e.target.value;mountBoard()};
   langSel.onchange=e=>{state.lang=e.target.value;boardEl.dataset.lang=state.lang;mountBoard()};
   cutSel.onchange=e=>{state.cut=e.target.value||null;mountBoard()};
@@ -138,4 +164,4 @@ const TIMING=${esc(JSON.stringify(timing))};
 </html>`;
 fs.mkdirSync(path.dirname(outPath),{recursive:true});
 fs.writeFileSync(outPath,html);
-console.log('wrote',outPath,hasMath?'(math via '+mathjax+')':'',Object.keys(timing).length?'timing for: '+Object.keys(timing).join(', '):'no timing yet');
+console.log('wrote',outPath,hasMath?'(math via '+mathjax+')':'',Object.keys(timing).length?'timing + narration for: '+Object.keys(timing).join(', ')+(inlineAudio?' (audio inlined)':' (audio by relative path; open the page from its build folder)'):'no timing yet');
