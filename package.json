@@ -1,0 +1,20 @@
+{
+  "name": "handdrawn-explainer",
+  "version": "0.1.0",
+  "description": "Hand-drawn whiteboard explainer videos from a scene file: wobbly strokes, handwriting, typeset LaTeX, a pen, TTS narration in five languages, MP4 + SRT for YouTube and Shorts. Ships as a Claude / Codex skill.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "narrate": "node scripts/narrate.mjs",
+    "render": "node scripts/render.mjs",
+    "example": "node scripts/narrate.mjs examples/fk-two-link/scene.json --engine mock && node scripts/build.mjs examples/fk-two-link/scene.json && echo 'open examples/fk-two-link/build/preview.html'",
+    "site": "node scripts/site.mjs",
+    "check": "node --check runtime/board.js && node --check scripts/build.mjs && node --check scripts/narrate.mjs && node --check scripts/render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0"
+  },
+  "keywords": ["whiteboard", "explainer", "animation", "education", "robotics", "tts", "youtube", "shorts", "claude-skill", "codex"]
+}
