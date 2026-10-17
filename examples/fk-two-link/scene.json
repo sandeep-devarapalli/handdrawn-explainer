@@ -1,0 +1,687 @@
+{
+  "version": 1,
+  "id": "fk-two-link",
+  "title": "Where is the gripper? Forward kinematics of a two-link arm",
+  "languages": [
+    "en",
+    "hi",
+    "kn",
+    "te",
+    "ta"
+  ],
+  "style": {
+    "font": "Kalam",
+    "breath": 0.4
+  },
+  "voice": {
+    "house": "Warm, unhurried US accent that is easy for an Indian listener. Short sentences. Pause at commas and full stops. Say symbols in full: 'theta one', 'ell two', 's one two'. Never rush numbers or equations.",
+    "engines": {
+      "openai": {
+        "model": "gpt-4o-mini-tts",
+        "voice": "ash",
+        "speed": 0.95,
+        "instructions": "{house}"
+      },
+      "elevenlabs": {
+        "voice_id": "SET_ME",
+        "model_id": "eleven_multilingual_v2",
+        "stability": 0.55,
+        "similarity_boost": 0.75,
+        "style": 0.2
+      },
+      "sarvam": {
+        "model": "bulbul:v2",
+        "speaker": "anushka",
+        "pace": 0.95
+      }
+    }
+  },
+  "formats": {
+    "wide": [
+      1600,
+      900
+    ],
+    "tall": [
+      900,
+      1600
+    ]
+  },
+  "regions": {
+    "sketch": {
+      "ref": [
+        700,
+        600
+      ],
+      "wide": [
+        0,
+        100,
+        700,
+        600
+      ],
+      "tall": [
+        60,
+        40,
+        780,
+        560
+      ]
+    },
+    "math": {
+      "ref": [
+        820,
+        650
+      ],
+      "wide": [
+        760,
+        60,
+        820,
+        650
+      ],
+      "tall": [
+        40,
+        620,
+        820,
+        620
+      ]
+    },
+    "jac": {
+      "ref": [
+        700,
+        150
+      ],
+      "wide": [
+        40,
+        655,
+        700,
+        135
+      ],
+      "tall": [
+        40,
+        1260,
+        820,
+        170
+      ]
+    }
+  },
+  "cuts": {
+    "short-fk": [
+      "question",
+      "link-one",
+      "link-two",
+      "add-them-up",
+      "takeaway"
+    ]
+  },
+  "beats": [
+    {
+      "id": "question",
+      "title": "Where is the gripper?",
+      "narration": {
+        "en": {
+          "say": "Here is a two-link arm. We know the link lengths, ell one and ell two, and the motors tell us the joint angles, theta one and theta two. [pause] The question: where is the gripper?",
+          "show": "Here is a two-link arm. We know the link lengths l1 and l2, and the motors tell us the joint angles θ1 and θ2. The question: where is the gripper?"
+        },
+        "hi": {
+          "say": "Yeh ek two-link arm hai. Humein link lengths, ell one aur ell two, pata hain, aur motors humein joint angles, theta one aur theta two, batate hain. [pause] Sawaal yeh hai: gripper kahan hai?",
+          "show": "यह एक two-link arm है। हमें link lengths l1 और l2 पता हैं, और motors हमें joint angles θ1 और θ2 बताते हैं। सवाल यह है: gripper कहाँ है?"
+        },
+        "kn": null,
+        "te": null,
+        "ta": null
+      },
+      "draw": [
+        {
+          "type": "arrow",
+          "region": "sketch",
+          "pts": [
+            [
+              200,
+              520
+            ],
+            [
+              640,
+              520
+            ]
+          ],
+          "color": "white",
+          "width": 3
+        },
+        {
+          "type": "arrow",
+          "region": "sketch",
+          "pts": [
+            [
+              260,
+              580
+            ],
+            [
+              260,
+              170
+            ]
+          ],
+          "color": "white",
+          "width": 3
+        },
+        {
+          "type": "text",
+          "region": "sketch",
+          "x": 650,
+          "y": 535,
+          "text": "x",
+          "color": "white",
+          "size": 34
+        },
+        {
+          "type": "text",
+          "region": "sketch",
+          "x": 236,
+          "y": 162,
+          "text": "y",
+          "color": "white",
+          "size": 34
+        },
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              260,
+              520
+            ],
+            [
+              459,
+              353
+            ]
+          ],
+          "color": "yellow",
+          "width": 7
+        },
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              459,
+              353
+            ],
+            [
+              511,
+              160
+            ]
+          ],
+          "color": "yellow",
+          "width": 7
+        },
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              511,
+              160
+            ],
+            [
+              518,
+              135
+            ]
+          ],
+          "color": "yellow"
+        },
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              518,
+              135
+            ],
+            [
+              500,
+              110
+            ],
+            [
+              515,
+              102
+            ]
+          ],
+          "color": "yellow"
+        },
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              518,
+              135
+            ],
+            [
+              540,
+              115
+            ],
+            [
+              545,
+              130
+            ]
+          ],
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "sketch",
+          "cx": 260,
+          "cy": 520,
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "sketch",
+          "cx": 459,
+          "cy": 353,
+          "color": "yellow"
+        },
+        {
+          "type": "math",
+          "region": "sketch",
+          "x": 292,
+          "y": 420,
+          "tex": "l_1",
+          "color": "yellow",
+          "size": 36
+        },
+        {
+          "type": "math",
+          "region": "sketch",
+          "x": 425,
+          "y": 265,
+          "tex": "l_2",
+          "color": "yellow",
+          "size": 36
+        },
+        {
+          "type": "arc",
+          "region": "sketch",
+          "cx": 260,
+          "cy": 520,
+          "r": 70,
+          "a0": 0,
+          "a1": -40,
+          "arrow": true,
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "sketch",
+          "x": 345,
+          "y": 500,
+          "tex": "\\theta_1",
+          "color": "pink",
+          "size": 32
+        },
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              459,
+              353
+            ],
+            [
+              528,
+              295
+            ]
+          ],
+          "color": "pink",
+          "width": 2
+        },
+        {
+          "type": "arc",
+          "region": "sketch",
+          "cx": 459,
+          "cy": 353,
+          "r": 60,
+          "a0": -40,
+          "a1": -75,
+          "arrow": true,
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "sketch",
+          "x": 520,
+          "y": 328,
+          "tex": "\\theta_2",
+          "color": "pink",
+          "size": 32
+        }
+      ]
+    },
+    {
+      "id": "link-one",
+      "title": "Link one alone",
+      "narration": {
+        "en": {
+          "say": "Start with link one alone. Drop a line down to the x axis. The horizontal run is ell one cos theta one, and the rise is ell one sine theta one. [pause] That is just the definition of cosine and sine.",
+          "show": "Start with link one alone. Drop a line down to the x axis. The horizontal run is l1 cos θ1 and the rise is l1 sin θ1. That is just the definition of cosine and sine."
+        },
+        "hi": {
+          "say": "Pehle sirf link one dekhein. Jod se x axis tak ek seedhi rekha neeche giraayein. Aage ki doori hai ell one cos theta one, aur oonchai hai ell one sine theta one. [pause] Yahi cosine aur sine ki paribhasha hai.",
+          "show": "पहले सिर्फ़ link one देखें। जोड़ से x axis तक एक सीधी रेखा नीचे गिराएँ। आगे की दूरी है l1 cos θ1 और ऊँचाई है l1 sin θ1। यही cosine और sine की परिभाषा है।"
+        },
+        "kn": null,
+        "te": null,
+        "ta": null
+      },
+      "draw": [
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              459,
+              353
+            ],
+            [
+              459,
+              520
+            ]
+          ],
+          "color": "teal",
+          "width": 3
+        },
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              262,
+              548
+            ],
+            [
+              457,
+              548
+            ]
+          ],
+          "color": "teal",
+          "width": 3
+        },
+        {
+          "type": "math",
+          "region": "sketch",
+          "x": 290,
+          "y": 592,
+          "tex": "l_1\\cos\\theta_1",
+          "color": "teal",
+          "size": 28
+        },
+        {
+          "type": "math",
+          "region": "sketch",
+          "x": 472,
+          "y": 445,
+          "tex": "l_1\\sin\\theta_1",
+          "color": "teal",
+          "size": 28
+        },
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 60,
+          "tex": "x_1 = l_1\\cos\\theta_1,\\qquad y_1 = l_1\\sin\\theta_1",
+          "color": "teal",
+          "size": 38,
+          "maxW": 760
+        }
+      ]
+    },
+    {
+      "id": "link-two",
+      "title": "Link two",
+      "narration": {
+        "en": {
+          "say": "Link two is tilted by theta two relative to link one. But relative to the ground, it is tilted by theta one plus theta two. [pause] So its run and rise use the sum of the two angles.",
+          "show": "Link two is tilted by θ2 relative to link one, but relative to the ground it is tilted by θ1 + θ2. So its run and rise use the sum of the two angles."
+        },
+        "hi": {
+          "say": "Link two, link one ke muqable theta two se jhuka hai. Lekin zameen ke muqable, theta one plus theta two se. [pause] Isliye iski doori aur oonchai mein dono angles ka jod aata hai.",
+          "show": "Link two link one के मुकाबले θ2 से झुका है, लेकिन ज़मीन के मुकाबले θ1 + θ2 से। इसलिए इसकी दूरी और ऊँचाई में दोनों angles का जोड़ आता है।"
+        },
+        "kn": null,
+        "te": null,
+        "ta": null
+      },
+      "draw": [
+        {
+          "type": "path",
+          "region": "sketch",
+          "pts": [
+            [
+              459,
+              353
+            ],
+            [
+              610,
+              353
+            ]
+          ],
+          "color": "teal",
+          "width": 2
+        },
+        {
+          "type": "arc",
+          "region": "sketch",
+          "cx": 459,
+          "cy": 353,
+          "r": 95,
+          "a0": 0,
+          "a1": -75,
+          "arrow": true,
+          "color": "teal",
+          "width": 3
+        },
+        {
+          "type": "math",
+          "region": "sketch",
+          "x": 575,
+          "y": 290,
+          "tex": "\\theta_1{+}\\theta_2",
+          "color": "teal",
+          "size": 28
+        },
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 160,
+          "tex": "x_2 = l_2\\cos(\\theta_1{+}\\theta_2),\\qquad y_2 = l_2\\sin(\\theta_1{+}\\theta_2)",
+          "color": "teal",
+          "size": 36,
+          "maxW": 780
+        }
+      ]
+    },
+    {
+      "id": "add-them-up",
+      "title": "Add them up",
+      "narration": {
+        "en": {
+          "say": "The gripper is just the two links added together. Run plus run gives x. Rise plus rise gives y. [pause] This pair of equations is forward kinematics.",
+          "show": "The gripper is just the two links added together. Run plus run gives x, rise plus rise gives y. This pair of equations is forward kinematics."
+        },
+        "hi": {
+          "say": "Gripper ki position dono links ka jod hai. Doori plus doori se x milta hai. Oonchai plus oonchai se y. [pause] Yahi do equations forward kinematics hain.",
+          "show": "Gripper की position दोनों links का जोड़ है। दूरी plus दूरी से x मिलता है, ऊँचाई plus ऊँचाई से y। यही दो equations forward kinematics हैं।"
+        },
+        "kn": null,
+        "te": null,
+        "ta": null
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 280,
+          "tex": "x = l_1\\cos\\theta_1 + l_2\\cos(\\theta_1{+}\\theta_2)",
+          "color": "white",
+          "size": 40,
+          "maxW": 760,
+          "id": "fk1"
+        },
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 355,
+          "tex": "y = l_1\\sin\\theta_1 + l_2\\sin(\\theta_1{+}\\theta_2)",
+          "color": "white",
+          "size": 40,
+          "maxW": 760,
+          "id": "fk2"
+        },
+        {
+          "type": "ring",
+          "refs": [
+            "fk1",
+            "fk2"
+          ],
+          "color": "coral",
+          "pad": 26
+        },
+        {
+          "type": "text",
+          "region": "math",
+          "x": 370,
+          "y": 425,
+          "text": "Forward Kinematics",
+          "color": "coral",
+          "size": 38
+        }
+      ]
+    },
+    {
+      "id": "one-function",
+      "title": "One function",
+      "narration": {
+        "en": {
+          "say": "Engineers shorten cos theta one to c one, and sine of theta one plus theta two to s one two. [pause] Then the whole thing is one function, f. Angles in, position out.",
+          "show": "Engineers shorten cos θ1 to c1 and sin(θ1 + θ2) to s12. Then the whole thing is one function f: angles in, position out."
+        },
+        "hi": {
+          "say": "Engineers cos theta one ko chhota karke c one likhte hain, aur sine of theta one plus theta two ko s one two. [pause] Phir poori cheez ek function f hai. Angles andar, position bahar.",
+          "show": "Engineers cos θ1 को छोटा करके c1 लिखते हैं और sin(θ1 + θ2) को s12। फिर पूरी चीज़ एक function f है: angles अंदर, position बाहर।"
+        },
+        "kn": null,
+        "te": null,
+        "ta": null
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 472,
+          "tex": "c_1=\\cos\\theta_1,\\quad s_{12}=\\sin(\\theta_1{+}\\theta_2)",
+          "color": "purple",
+          "size": 30,
+          "maxW": 620
+        },
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 560,
+          "tex": "\\mathbf{p}=\\begin{bmatrix}x\\\\ y\\end{bmatrix}=f(\\theta_1,\\theta_2)",
+          "color": "white",
+          "size": 36,
+          "maxW": 400
+        },
+        {
+          "type": "text",
+          "region": "math",
+          "x": 420,
+          "y": 560,
+          "text": "angles in, position out",
+          "color": "coral",
+          "size": 30
+        }
+      ]
+    },
+    {
+      "id": "make-it-move",
+      "title": "Make it move",
+      "narration": {
+        "en": {
+          "say": "Now differentiate. Angle speeds go in, gripper speed comes out, and the matrix in between is the Jacobian. [pause] Every entry is just a derivative of the two lines above.",
+          "show": "Now differentiate. Angle speeds go in, gripper speed comes out, and the matrix in between is the Jacobian. Every entry is just a derivative of the two lines above."
+        },
+        "hi": {
+          "say": "Ab differentiate karein. Angle ki speed andar jaati hai, gripper ki speed bahar aati hai, aur beech ka matrix Jacobian hai. [pause] Iski har entry upar ki do lines ka derivative hai.",
+          "show": "अब differentiate करें। Angle की speed अंदर जाती है, gripper की speed बाहर आती है, और बीच का matrix Jacobian है। इसकी हर entry ऊपर की दो lines का derivative है।"
+        },
+        "kn": null,
+        "te": null,
+        "ta": null
+      },
+      "draw": [
+        {
+          "type": "text",
+          "region": "jac",
+          "x": 480,
+          "y": 22,
+          "text": "the Jacobian",
+          "color": "coral",
+          "size": 34
+        },
+        {
+          "type": "math",
+          "region": "jac",
+          "x": 20,
+          "y": 90,
+          "tex": "\\dot{\\mathbf p}=J\\,\\dot{\\boldsymbol\\theta},\\qquad J=\\begin{bmatrix}-l_1 s_1-l_2 s_{12} & -l_2 s_{12}\\\\ l_1 c_1+l_2 c_{12} & l_2 c_{12}\\end{bmatrix}",
+          "color": "purple",
+          "size": 34,
+          "maxW": 660,
+          "id": "jac"
+        }
+      ]
+    },
+    {
+      "id": "takeaway",
+      "title": "Takeaway",
+      "narration": {
+        "en": {
+          "say": "That is the whole story. Forward kinematics turns angles into position. The Jacobian turns angle speeds into gripper speed. [pause] Everything else in this course builds on these two.",
+          "show": "That is the whole story. Forward kinematics turns angles into position. The Jacobian turns angle speeds into gripper speed. Everything else in this course builds on these two."
+        },
+        "hi": {
+          "say": "Bas yahi poori kahani hai. Forward kinematics angles ko position mein badalta hai. Jacobian angle speeds ko gripper speed mein. [pause] Is course mein baaki sab inhi do par tika hai.",
+          "show": "बस यही पूरी कहानी है। Forward kinematics angles को position में बदलता है। Jacobian angle speeds को gripper speed में। इस course में बाकी सब इन्हीं दो पर टिका है।"
+        },
+        "kn": null,
+        "te": null,
+        "ta": null
+      },
+      "draw": [
+        {
+          "type": "ring",
+          "refs": [
+            "jac"
+          ],
+          "color": "coral",
+          "pad": 22
+        },
+        {
+          "type": "text",
+          "region": "math",
+          "x": 420,
+          "y": 620,
+          "text": "speeds in, speed out",
+          "color": "coral",
+          "size": 30
+        }
+      ]
+    }
+  ]
+}

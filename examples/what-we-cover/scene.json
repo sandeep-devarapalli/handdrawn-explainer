@@ -1,0 +1,983 @@
+{
+  "version": 1,
+  "id": "what-we-cover",
+  "title": "Robotics 101: what are we going to cover?",
+  "languages": [
+    "en"
+  ],
+  "style": {
+    "font": "Kalam"
+  },
+  "voice": {
+    "house": "Warm, unhurried US accent that is easy for an Indian listener. Short sentences. Pause at commas and full stops.",
+    "engines": {
+      "openai": {
+        "model": "gpt-4o-mini-tts",
+        "voice": "ash",
+        "speed": 0.95,
+        "instructions": "{house}"
+      }
+    }
+  },
+  "formats": {
+    "wide": [
+      1600,
+      900
+    ]
+  },
+  "regions": {
+    "board": {
+      "ref": [
+        1600,
+        900
+      ],
+      "wide": [
+        0,
+        0,
+        1600,
+        800
+      ]
+    }
+  },
+  "beats": [
+    {
+      "id": "question",
+      "title": "The question",
+      "narration": {
+        "en": {
+          "say": "Let's start with the question that this whole course answers. [pause] What are we going to cover?",
+          "show": "Start with the question. Everything on the board grows out of it."
+        }
+      },
+      "draw": [
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              70,
+              40
+            ],
+            [
+              150,
+              125
+            ]
+          ],
+          "color": "blue"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 175,
+          "y": 150,
+          "text": "What are we",
+          "color": "blue",
+          "size": 46
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 235,
+          "y": 205,
+          "text": "going to cover?",
+          "color": "blue",
+          "size": 46
+        }
+      ]
+    },
+    {
+      "id": "branches",
+      "title": "Branch the topics",
+      "narration": {
+        "en": {
+          "say": "Three things first. Coordinate transformations. The robotic wrist, also called the end effector. And forward kinematics, F K for short.",
+          "show": "Branch the topics with arrows, one at a time, so the eye follows the pen."
+        }
+      },
+      "draw": [
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              560,
+              185
+            ],
+            [
+              640,
+              180
+            ],
+            [
+              690,
+              165
+            ]
+          ],
+          "color": "coral"
+        },
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              690,
+              165
+            ],
+            [
+              705,
+              100
+            ],
+            [
+              760,
+              95
+            ]
+          ],
+          "color": "coral"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 790,
+          "y": 105,
+          "text": "Co-ordinate",
+          "color": "coral",
+          "size": 42
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 900,
+          "y": 160,
+          "text": "Transformations",
+          "color": "coral",
+          "size": 42
+        },
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              690,
+              165
+            ],
+            [
+              720,
+              245
+            ],
+            [
+              760,
+              245
+            ]
+          ],
+          "color": "coral"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 790,
+          "y": 258,
+          "text": "Robotic wrist",
+          "color": "coral",
+          "size": 42
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 1030,
+          "y": 258,
+          "text": "(end-effector)",
+          "color": "teal",
+          "size": 40
+        },
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              690,
+              165
+            ],
+            [
+              700,
+              330
+            ],
+            [
+              760,
+              345
+            ]
+          ],
+          "color": "coral"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 790,
+          "y": 358,
+          "text": "Forward",
+          "color": "coral",
+          "size": 42
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 850,
+          "y": 410,
+          "text": "Kinematics",
+          "color": "coral",
+          "size": 42
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 1040,
+          "y": 392,
+          "text": "(F.K)",
+          "color": "yellow",
+          "size": 42
+        }
+      ]
+    },
+    {
+      "id": "arm",
+      "title": "Draw the arm",
+      "narration": {
+        "en": {
+          "say": "Here is the thing we care about. A robot arm is links and joints. [pause] So we draw links and joints.",
+          "show": "Draw the thing itself: an arm is links and joints, so draw links and joints."
+        }
+      },
+      "draw": [
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              590,
+              760
+            ],
+            [
+              740,
+              760
+            ],
+            [
+              725,
+              650
+            ],
+            [
+              605,
+              650
+            ]
+          ],
+          "color": "yellow",
+          "closed": true
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              640,
+              650
+            ],
+            [
+              690,
+              650
+            ],
+            [
+              683,
+              565
+            ],
+            [
+              647,
+              565
+            ]
+          ],
+          "color": "yellow",
+          "closed": true
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              665,
+              560
+            ],
+            [
+              745,
+              445
+            ]
+          ],
+          "color": "yellow",
+          "width": 6
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              745,
+              445
+            ],
+            [
+              885,
+              545
+            ]
+          ],
+          "color": "yellow",
+          "width": 6
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              885,
+              545
+            ],
+            [
+              965,
+              485
+            ]
+          ],
+          "color": "yellow",
+          "width": 6
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              965,
+              485
+            ],
+            [
+              1065,
+              645
+            ]
+          ],
+          "color": "yellow",
+          "width": 6
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1014,
+              587
+            ],
+            [
+              1035,
+              574
+            ],
+            [
+              1016,
+              543
+            ],
+            [
+              995,
+              556
+            ]
+          ],
+          "color": "yellow",
+          "closed": true
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1065,
+              645
+            ],
+            [
+              1115,
+              620
+            ]
+          ],
+          "color": "yellow"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1115,
+              620
+            ],
+            [
+              1150,
+              575
+            ],
+            [
+              1175,
+              590
+            ]
+          ],
+          "color": "yellow"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1115,
+              620
+            ],
+            [
+              1165,
+              650
+            ],
+            [
+              1180,
+              625
+            ]
+          ],
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "board",
+          "cx": 665,
+          "cy": 560,
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "board",
+          "cx": 745,
+          "cy": 445,
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "board",
+          "cx": 885,
+          "cy": 545,
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "board",
+          "cx": 965,
+          "cy": 485,
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "board",
+          "cx": 1065,
+          "cy": 645,
+          "color": "yellow"
+        }
+      ]
+    },
+    {
+      "id": "parameters",
+      "title": "Name the parameters",
+      "narration": {
+        "en": {
+          "say": "Each joint has an angle, theta. Each link has a length, ell. [pause] And the gripper ends up somewhere: x, y, z.",
+          "show": "Now the parameters: joint angles θ, link length l, and where the gripper ends up, (x, y, z)."
+        }
+      },
+      "draw": [
+        {
+          "type": "arc",
+          "region": "board",
+          "cx": 665,
+          "cy": 560,
+          "r": 42,
+          "a0": -150,
+          "a1": -40,
+          "arrow": true,
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "board",
+          "x": 690,
+          "y": 500,
+          "tex": "\\theta",
+          "color": "pink",
+          "size": 34
+        },
+        {
+          "type": "arc",
+          "region": "board",
+          "cx": 745,
+          "cy": 445,
+          "r": 40,
+          "a0": 200,
+          "a1": 320,
+          "arrow": true,
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "board",
+          "x": 725,
+          "y": 400,
+          "tex": "\\theta",
+          "color": "pink",
+          "size": 34
+        },
+        {
+          "type": "arc",
+          "region": "board",
+          "cx": 885,
+          "cy": 545,
+          "r": 40,
+          "a0": 30,
+          "a1": 150,
+          "arrow": true,
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "board",
+          "x": 875,
+          "y": 630,
+          "tex": "\\theta",
+          "color": "pink",
+          "size": 34
+        },
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              999,
+              464
+            ],
+            [
+              1099,
+              624
+            ]
+          ],
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "board",
+          "x": 1075,
+          "y": 520,
+          "tex": "l",
+          "color": "pink",
+          "size": 36
+        },
+        {
+          "type": "math",
+          "region": "board",
+          "x": 1150,
+          "y": 700,
+          "tex": "(x,\\,y,\\,z)",
+          "color": "pink",
+          "size": 38
+        }
+      ]
+    },
+    {
+      "id": "fk-ik",
+      "title": "FK and IK",
+      "narration": {
+        "en": {
+          "say": "Forward kinematics takes robot parameters and gives you the end effector position and orientation. [pause] Inverse kinematics goes the other way.",
+          "show": "FK maps parameters to pose. IK goes the other way. Two arrows carry the whole idea."
+        }
+      },
+      "draw": [
+        {
+          "type": "text",
+          "region": "board",
+          "x": 150,
+          "y": 345,
+          "text": "robot",
+          "color": "white",
+          "size": 40
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 190,
+          "y": 398,
+          "text": "parameters",
+          "color": "white",
+          "size": 40
+        },
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              420,
+              365
+            ],
+            [
+              525,
+              365
+            ]
+          ],
+          "color": "purple"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 440,
+          "y": 335,
+          "text": "FK",
+          "color": "purple",
+          "size": 44,
+          "bold": true
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 540,
+          "y": 345,
+          "text": "End effector",
+          "color": "white",
+          "size": 40
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 560,
+          "y": 398,
+          "text": "position &",
+          "color": "white",
+          "size": 40
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 560,
+          "y": 450,
+          "text": "orientation",
+          "color": "white",
+          "size": 40
+        },
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              525,
+              400
+            ],
+            [
+              420,
+              400
+            ]
+          ],
+          "color": "pink"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 445,
+          "y": 450,
+          "text": "IK",
+          "color": "pink",
+          "size": 44,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "ik",
+      "title": "The late reveal",
+      "narration": {
+        "en": {
+          "say": "Which brings us to the fourth topic: inverse kinematics.",
+          "show": "The fourth topic arrives late, as a reveal, once FK makes sense."
+        }
+      },
+      "draw": [
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              250,
+              240
+            ],
+            [
+              130,
+              320
+            ],
+            [
+              90,
+              470
+            ],
+            [
+              170,
+              575
+            ]
+          ],
+          "color": "coral"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 180,
+          "y": 595,
+          "text": "Inverse Kinematics",
+          "color": "coral",
+          "size": 44
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 330,
+          "y": 650,
+          "text": "(I.K)",
+          "color": "pink",
+          "size": 44
+        }
+      ]
+    },
+    {
+      "id": "takeaway",
+      "title": "The takeaway",
+      "narration": {
+        "en": {
+          "say": "So, in one line: forward kinematics is how changing the robot parameters changes the end effector position and orientation.",
+          "show": "Close with the one-line takeaway, written out in full."
+        }
+      },
+      "draw": [
+        {
+          "type": "text",
+          "region": "board",
+          "x": 690,
+          "y": 805,
+          "text": "F.K",
+          "color": "coral",
+          "size": 36
+        },
+        {
+          "type": "arrow",
+          "region": "board",
+          "pts": [
+            [
+              760,
+              792
+            ],
+            [
+              822,
+              792
+            ]
+          ],
+          "color": "coral",
+          "width": 4
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 840,
+          "y": 805,
+          "text": "How changing robot parameters",
+          "color": "coral",
+          "size": 36
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 700,
+          "y": 858,
+          "text": "changes the end-effector position & orientation",
+          "color": "coral",
+          "size": 34
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "title": "And a joke",
+      "narration": {
+        "en": {
+          "say": "And yes, they are a little scary. [pause] Run.",
+          "show": "And a joke. People remember the board that made them smile."
+        }
+      },
+      "draw": [
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1200,
+              375
+            ],
+            [
+              1290,
+              380
+            ]
+          ],
+          "color": "teal"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1290,
+              380
+            ],
+            [
+              1320,
+              355
+            ],
+            [
+              1340,
+              370
+            ]
+          ],
+          "color": "teal"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1290,
+              380
+            ],
+            [
+              1325,
+              400
+            ],
+            [
+              1345,
+              385
+            ]
+          ],
+          "color": "teal"
+        },
+        {
+          "type": "circle",
+          "region": "board",
+          "cx": 1400,
+          "cy": 378,
+          "r": 20,
+          "color": "pink"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1400,
+              398
+            ],
+            [
+              1400,
+              455
+            ]
+          ],
+          "color": "pink"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1365,
+              420
+            ],
+            [
+              1435,
+              425
+            ]
+          ],
+          "color": "pink"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1400,
+              455
+            ],
+            [
+              1375,
+              500
+            ]
+          ],
+          "color": "pink"
+        },
+        {
+          "type": "path",
+          "region": "board",
+          "pts": [
+            [
+              1400,
+              455
+            ],
+            [
+              1425,
+              500
+            ]
+          ],
+          "color": "pink"
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 1340,
+          "y": 320,
+          "text": "Run",
+          "color": "white",
+          "size": 38,
+          "rot": -6
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 1470,
+          "y": 300,
+          "text": "Run",
+          "color": "white",
+          "size": 38,
+          "rot": 5
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 1480,
+          "y": 425,
+          "text": "Run",
+          "color": "white",
+          "size": 38,
+          "rot": 2
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 1310,
+          "y": 470,
+          "text": "Run",
+          "color": "white",
+          "size": 38,
+          "rot": -4
+        },
+        {
+          "type": "text",
+          "region": "board",
+          "x": 1430,
+          "y": 520,
+          "text": "Run",
+          "color": "white",
+          "size": 38,
+          "rot": 8
+        }
+      ]
+    }
+  ]
+}

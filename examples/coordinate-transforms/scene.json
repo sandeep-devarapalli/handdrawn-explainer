@@ -1,0 +1,994 @@
+{
+  "version": 1,
+  "id": "coordinate-transforms",
+  "title": "Robotics 101: coordinate transformations, from a rotation to a chain of frames",
+  "languages": [
+    "en",
+    "hi"
+  ],
+  "style": {
+    "font": "Kalam",
+    "breath": 0.4
+  },
+  "voice": {
+    "house": "Warm, unhurried US accent that is easy for an Indian listener. Short sentences. Pause at commas and full stops. Say symbols in full: 'theta', 'x hat', 'H one'. Never rush numbers or equations.",
+    "engines": {
+      "openai": {
+        "model": "gpt-4o-mini-tts",
+        "voice": "ash",
+        "speed": 0.95,
+        "instructions": "{house}"
+      },
+      "elevenlabs": {
+        "voice_id": "SET_ME",
+        "model_id": "eleven_multilingual_v2",
+        "stability": 0.55,
+        "similarity_boost": 0.75,
+        "style": 0.2
+      },
+      "sarvam": {
+        "model": "bulbul:v2",
+        "speaker": "anushka",
+        "pace": 0.95
+      }
+    }
+  },
+  "formats": {
+    "wide": [
+      1600,
+      900
+    ],
+    "tall": [
+      900,
+      1600
+    ]
+  },
+  "regions": {
+    "why": {
+      "ref": [
+        560,
+        380
+      ],
+      "wide": [
+        20,
+        40,
+        560,
+        360
+      ],
+      "tall": [
+        40,
+        30,
+        820,
+        360
+      ]
+    },
+    "rot": {
+      "ref": [
+        560,
+        400
+      ],
+      "wide": [
+        20,
+        420,
+        560,
+        380
+      ],
+      "tall": [
+        40,
+        400,
+        820,
+        380
+      ]
+    },
+    "math": {
+      "ref": [
+        980,
+        560
+      ],
+      "wide": [
+        600,
+        50,
+        980,
+        560
+      ],
+      "tall": [
+        40,
+        790,
+        820,
+        440
+      ]
+    },
+    "chain": {
+      "ref": [
+        980,
+        220
+      ],
+      "wide": [
+        600,
+        620,
+        980,
+        180
+      ],
+      "tall": [
+        40,
+        1240,
+        820,
+        190
+      ]
+    }
+  },
+  "cuts": {
+    "short-rotation": [
+      "setup",
+      "x-axis",
+      "y-axis",
+      "matrix",
+      "takeaway"
+    ]
+  },
+  "beats": [
+    {
+      "id": "why",
+      "title": "Why coordinate transformations?",
+      "narration": {
+        "en": {
+          "say": "A robot lives in two worlds at once. The base and its motors live in a fixed frame, F. The gripper, or a camera on it, lives in a moving frame, M. [pause] The camera sees an object as the vector x, in M. The motors need the same point as the vector X, in F. Getting from one to the other is a coordinate transformation.",
+          "show": "The base lives in a fixed frame F; the gripper and its camera live in a moving frame M. The camera sees the object as x in M; the motors need it as X in F. Going from one to the other is a coordinate transformation."
+        },
+        "hi": {
+          "say": "Ek robot ek saath do duniya mein rehta hai. Base aur uske motors ek fixed frame F mein. Gripper, ya uspar lagi camera, ek moving frame M mein. [pause] Camera object ko vector x ke roop mein dekhta hai, M mein. Motors ko wahi point vector X chahiye, F mein. Ek se doosre tak jaana hi coordinate transformation hai.",
+          "show": "Base एक fixed frame F में है; gripper और उसका camera एक moving frame M में। Camera object को x (M में) देखता है; motors को वही point X (F में) चाहिए। एक से दूसरे तक जाना ही coordinate transformation है।"
+        }
+      },
+      "draw": [
+        {
+          "type": "path",
+          "region": "why",
+          "pts": [
+            [
+              40,
+              340
+            ],
+            [
+              160,
+              340
+            ]
+          ],
+          "color": "yellow",
+          "width": 4
+        },
+        {
+          "type": "path",
+          "region": "why",
+          "pts": [
+            [
+              55,
+              355
+            ],
+            [
+              70,
+              340
+            ]
+          ],
+          "color": "yellow",
+          "width": 3
+        },
+        {
+          "type": "path",
+          "region": "why",
+          "pts": [
+            [
+              85,
+              355
+            ],
+            [
+              100,
+              340
+            ]
+          ],
+          "color": "yellow",
+          "width": 3
+        },
+        {
+          "type": "path",
+          "region": "why",
+          "pts": [
+            [
+              115,
+              355
+            ],
+            [
+              130,
+              340
+            ]
+          ],
+          "color": "yellow",
+          "width": 3
+        },
+        {
+          "type": "arrow",
+          "region": "why",
+          "pts": [
+            [
+              100,
+              340
+            ],
+            [
+              200,
+              340
+            ]
+          ],
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "arrow",
+          "region": "why",
+          "pts": [
+            [
+              100,
+              340
+            ],
+            [
+              100,
+              240
+            ]
+          ],
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "text",
+          "region": "why",
+          "x": 150,
+          "y": 375,
+          "text": "fixed frame F",
+          "color": "pink",
+          "size": 28
+        },
+        {
+          "type": "path",
+          "region": "why",
+          "pts": [
+            [
+              100,
+              340
+            ],
+            [
+              210,
+              170
+            ]
+          ],
+          "color": "yellow",
+          "width": 6
+        },
+        {
+          "type": "path",
+          "region": "why",
+          "pts": [
+            [
+              210,
+              170
+            ],
+            [
+              340,
+              290
+            ]
+          ],
+          "color": "yellow",
+          "width": 6
+        },
+        {
+          "type": "dot",
+          "region": "why",
+          "cx": 100,
+          "cy": 340,
+          "color": "yellow"
+        },
+        {
+          "type": "dot",
+          "region": "why",
+          "cx": 210,
+          "cy": 170,
+          "color": "yellow"
+        },
+        {
+          "type": "path",
+          "region": "why",
+          "pts": [
+            [
+              340,
+              290
+            ],
+            [
+              372,
+              272
+            ],
+            [
+              368,
+              310
+            ]
+          ],
+          "color": "yellow",
+          "width": 5
+        },
+        {
+          "type": "arrow",
+          "region": "why",
+          "pts": [
+            [
+              340,
+              290
+            ],
+            [
+              430,
+              290
+            ]
+          ],
+          "color": "white",
+          "width": 3
+        },
+        {
+          "type": "arrow",
+          "region": "why",
+          "pts": [
+            [
+              340,
+              290
+            ],
+            [
+              340,
+              205
+            ]
+          ],
+          "color": "white",
+          "width": 3
+        },
+        {
+          "type": "text",
+          "region": "why",
+          "x": 395,
+          "y": 335,
+          "text": "moving frame M",
+          "color": "white",
+          "size": 28
+        },
+        {
+          "type": "dot",
+          "region": "why",
+          "cx": 480,
+          "cy": 150,
+          "color": "blue"
+        },
+        {
+          "type": "text",
+          "region": "why",
+          "x": 440,
+          "y": 128,
+          "text": "object",
+          "color": "blue",
+          "size": 26
+        },
+        {
+          "type": "arrow",
+          "region": "why",
+          "pts": [
+            [
+              340,
+              290
+            ],
+            [
+              472,
+              158
+            ]
+          ],
+          "color": "blue",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "why",
+          "x": 410,
+          "y": 225,
+          "tex": "\\vec{x}",
+          "color": "blue",
+          "size": 32
+        },
+        {
+          "type": "arrow",
+          "region": "why",
+          "pts": [
+            [
+              100,
+              340
+            ],
+            [
+              470,
+              158
+            ]
+          ],
+          "color": "coral",
+          "width": 4
+        },
+        {
+          "type": "math",
+          "region": "why",
+          "x": 250,
+          "y": 215,
+          "tex": "\\vec{X}",
+          "color": "coral",
+          "size": 32
+        }
+      ]
+    },
+    {
+      "id": "setup",
+      "title": "Pure rotation",
+      "narration": {
+        "en": {
+          "say": "Take the simplest case first. Frame M sits on top of frame F, same origin, but rotated by an angle theta. No translation. [pause] The question: if I know a point in M, what is it in F?",
+          "show": "Simplest case: M shares F's origin but is rotated by θ. No translation. If I know a point in M, what is it in F?"
+        },
+        "hi": {
+          "say": "Pehle sabse simple case. Frame M, frame F ke upar hi hai, same origin, lekin theta angle se ghuma hua. Koi translation nahi. [pause] Sawaal: agar mujhe ek point M mein pata hai, toh F mein kya hoga?",
+          "show": "सबसे simple case: M का origin F जैसा ही है, लेकिन θ से घूमा हुआ। कोई translation नहीं। अगर कोई point M में पता है, तो F में क्या होगा?"
+        }
+      },
+      "draw": [
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              110,
+              312
+            ],
+            [
+              330,
+              312
+            ]
+          ],
+          "color": "pink",
+          "width": 3
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              130,
+              326
+            ],
+            [
+              145,
+              312
+            ]
+          ],
+          "color": "pink",
+          "width": 2
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              175,
+              326
+            ],
+            [
+              190,
+              312
+            ]
+          ],
+          "color": "pink",
+          "width": 2
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              220,
+              326
+            ],
+            [
+              235,
+              312
+            ]
+          ],
+          "color": "pink",
+          "width": 2
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              265,
+              326
+            ],
+            [
+              280,
+              312
+            ]
+          ],
+          "color": "pink",
+          "width": 2
+        },
+        {
+          "type": "arrow",
+          "region": "rot",
+          "pts": [
+            [
+              200,
+              300
+            ],
+            [
+              430,
+              300
+            ]
+          ],
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "arrow",
+          "region": "rot",
+          "pts": [
+            [
+              200,
+              300
+            ],
+            [
+              200,
+              80
+            ]
+          ],
+          "color": "pink",
+          "width": 4
+        },
+        {
+          "type": "text",
+          "region": "rot",
+          "x": 440,
+          "y": 312,
+          "text": "F",
+          "color": "pink",
+          "size": 34
+        },
+        {
+          "type": "dot",
+          "region": "rot",
+          "cx": 200,
+          "cy": 300,
+          "color": "white"
+        },
+        {
+          "type": "arrow",
+          "region": "rot",
+          "pts": [
+            [
+              200,
+              300
+            ],
+            [
+              380,
+              174
+            ]
+          ],
+          "color": "white",
+          "width": 4
+        },
+        {
+          "type": "arrow",
+          "region": "rot",
+          "pts": [
+            [
+              200,
+              300
+            ],
+            [
+              74,
+              120
+            ]
+          ],
+          "color": "white",
+          "width": 4
+        },
+        {
+          "type": "text",
+          "region": "rot",
+          "x": 392,
+          "y": 150,
+          "text": "M",
+          "color": "white",
+          "size": 34
+        },
+        {
+          "type": "arc",
+          "region": "rot",
+          "cx": 200,
+          "cy": 300,
+          "r": 70,
+          "a0": 0,
+          "a1": -35,
+          "arrow": true,
+          "color": "pink",
+          "width": 3
+        },
+        {
+          "type": "math",
+          "region": "rot",
+          "x": 278,
+          "y": 272,
+          "tex": "\\theta",
+          "color": "pink",
+          "size": 30
+        }
+      ]
+    },
+    {
+      "id": "x-axis",
+      "title": "Where does M's x axis land?",
+      "narration": {
+        "en": {
+          "say": "Start with M's own x axis: the unit vector one, zero, in M. Drop a line down and a line across. In F it reaches cos theta along x, and sine theta along y. [pause] So one zero in M becomes cos theta, sine theta in F.",
+          "show": "M's own x axis, the unit vector (1, 0) in M: in F it reaches cos θ along x and sin θ along y. So (1, 0) in M becomes (cos θ, sin θ) in F."
+        },
+        "hi": {
+          "say": "M ki apni x axis se shuru karein: unit vector one, zero, M mein. Ek line neeche aur ek line across giraayein. F mein yeh x par cos theta tak, aur y par sine theta tak pahunchta hai. [pause] Toh one zero, M mein, F mein cos theta, sine theta ban jaata hai.",
+          "show": "M की अपनी x axis, unit vector (1, 0) M में: F में यह x पर cos θ और y पर sin θ तक पहुँचता है। तो M का (1, 0), F में (cos θ, sin θ) बन जाता है।"
+        }
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "rot",
+          "x": 392,
+          "y": 200,
+          "tex": "(1,0)",
+          "color": "coral",
+          "size": 26
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              380,
+              174
+            ],
+            [
+              380,
+              300
+            ]
+          ],
+          "color": "teal",
+          "width": 2
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              380,
+              174
+            ],
+            [
+              200,
+              174
+            ]
+          ],
+          "color": "teal",
+          "width": 2
+        },
+        {
+          "type": "math",
+          "region": "rot",
+          "x": 262,
+          "y": 345,
+          "tex": "\\cos\\theta",
+          "color": "teal",
+          "size": 26
+        },
+        {
+          "type": "math",
+          "region": "rot",
+          "x": 392,
+          "y": 250,
+          "tex": "\\sin\\theta",
+          "color": "teal",
+          "size": 26
+        },
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 80,
+          "tex": "\\begin{bmatrix}1\\\\0\\end{bmatrix}_{M}\\;\\longrightarrow\\;\\begin{bmatrix}\\cos\\theta\\\\ \\sin\\theta\\end{bmatrix}_{F}",
+          "color": "coral",
+          "size": 34,
+          "maxW": 520
+        }
+      ]
+    },
+    {
+      "id": "y-axis",
+      "title": "And the y axis?",
+      "narration": {
+        "en": {
+          "say": "Now M's y axis: zero, one in M. It leans back over the negative x side. Along x it reaches minus sine theta. Along y, cos theta. [pause] So zero one in M becomes minus sine theta, cos theta in F.",
+          "show": "M's y axis, (0, 1) in M, leans over the negative x side: it reaches −sin θ along x and cos θ along y. So (0, 1) in M becomes (−sin θ, cos θ) in F."
+        },
+        "hi": {
+          "say": "Ab M ki y axis: zero, one, M mein. Yeh negative x ki taraf jhukti hai. x par yeh minus sine theta tak pahunchti hai. y par, cos theta. [pause] Toh zero one, M mein, F mein minus sine theta, cos theta ban jaata hai.",
+          "show": "M की y axis, (0, 1) M में, negative x की तरफ झुकती है: x पर −sin θ और y पर cos θ। तो M का (0, 1), F में (−sin θ, cos θ) बन जाता है।"
+        }
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "rot",
+          "x": 30,
+          "y": 108,
+          "tex": "(0,1)",
+          "color": "teal",
+          "size": 26
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              74,
+              120
+            ],
+            [
+              74,
+              300
+            ]
+          ],
+          "color": "teal",
+          "width": 2
+        },
+        {
+          "type": "path",
+          "region": "rot",
+          "pts": [
+            [
+              74,
+              120
+            ],
+            [
+              200,
+              120
+            ]
+          ],
+          "color": "teal",
+          "width": 2
+        },
+        {
+          "type": "math",
+          "region": "rot",
+          "x": 80,
+          "y": 345,
+          "tex": "-\\sin\\theta",
+          "color": "teal",
+          "size": 26
+        },
+        {
+          "type": "math",
+          "region": "rot",
+          "x": 100,
+          "y": 215,
+          "tex": "\\cos\\theta",
+          "color": "teal",
+          "size": 26
+        },
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 200,
+          "tex": "\\begin{bmatrix}0\\\\1\\end{bmatrix}_{M}\\;\\longrightarrow\\;\\begin{bmatrix}-\\sin\\theta\\\\ \\cos\\theta\\end{bmatrix}_{F}",
+          "color": "teal",
+          "size": 34,
+          "maxW": 520
+        }
+      ]
+    },
+    {
+      "id": "matrix",
+      "title": "The rotation matrix",
+      "narration": {
+        "en": {
+          "say": "Any point in M is some amount of its x axis plus some amount of its y axis. So put the two answers side by side as columns. [pause] X in F equals A times x in M, and A is this two by two matrix: the rotation matrix. The first column is where one zero went, the second is where zero one went.",
+          "show": "Any point in M is some x-axis plus some y-axis. Put the two answers side by side as columns: X = A x, where A is the 2×2 rotation matrix. Column one is where (1, 0) went, column two is where (0, 1) went."
+        },
+        "hi": {
+          "say": "M ka koi bhi point uski x axis ka kuch hissa plus y axis ka kuch hissa hai. Toh dono answers ko columns ki tarah side by side rakhein. [pause] X, F mein, equals A times x, M mein, aur A yeh two by two matrix hai: rotation matrix. Pehla column wahan hai jahan one zero gaya, doosra jahan zero one gaya.",
+          "show": "M का कोई भी point कुछ x axis plus कुछ y axis है। दोनों answers को columns की तरह रखें: X = A x, जहाँ A यह 2×2 rotation matrix है। पहला column वहाँ है जहाँ (1, 0) गया, दूसरा जहाँ (0, 1) गया।"
+        }
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 345,
+          "tex": "\\vec{X} = A\\,\\vec{x},\\qquad A=\\begin{bmatrix}\\cos\\theta & -\\sin\\theta\\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}",
+          "color": "white",
+          "size": 38,
+          "maxW": 720,
+          "id": "rot"
+        },
+        {
+          "type": "ring",
+          "refs": [
+            "rot"
+          ],
+          "color": "coral",
+          "pad": 24
+        },
+        {
+          "type": "text",
+          "region": "math",
+          "x": 760,
+          "y": 300,
+          "text": "rotation matrix",
+          "color": "coral",
+          "size": 32
+        },
+        {
+          "type": "arrow",
+          "region": "math",
+          "pts": [
+            [
+              780,
+              315
+            ],
+            [
+              740,
+              335
+            ]
+          ],
+          "color": "coral",
+          "width": 3
+        }
+      ]
+    },
+    {
+      "id": "translate",
+      "title": "Add a shift",
+      "narration": {
+        "en": {
+          "say": "Real frames also move. If M's origin sits at d in F, you rotate first, then add the shift: X equals A x plus d. [pause] There is a neat trick to make that one multiplication. Add a one under each vector, and pack A and d into one three by three matrix. That matrix is H, the homogeneous transform.",
+          "show": "Real frames also move. If M's origin is at d in F: X = A x + d. Trick: add a 1 under each vector and pack A and d into one 3×3 matrix H, the homogeneous transform. Now it is one multiplication."
+        },
+        "hi": {
+          "say": "Asli frames shift bhi hoti hain. Agar M ka origin F mein d par hai, toh pehle rotate karein, phir shift jodein: X equals A x plus d. [pause] Isko ek hi multiplication banane ki ek trick hai. Har vector ke neeche ek one jodein, aur A aur d ko ek three by three matrix mein pack karein. Yahi matrix H hai, homogeneous transform.",
+          "show": "असली frames shift भी होती हैं। अगर M का origin F में d पर है: X = A x + d. Trick: हर vector के नीचे 1 जोड़ें और A, d को एक 3×3 matrix H में pack करें, homogeneous transform। अब यह एक ही multiplication है।"
+        }
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "math",
+          "x": 0,
+          "y": 470,
+          "tex": "\\vec{X} = A\\,\\vec{x} + \\vec{d}",
+          "color": "white",
+          "size": 34,
+          "maxW": 300
+        },
+        {
+          "type": "math",
+          "region": "math",
+          "x": 360,
+          "y": 480,
+          "tex": "\\begin{bmatrix}\\vec{X}\\\\1\\end{bmatrix}=\\underbrace{\\begin{bmatrix}A & \\vec{d}\\\\ \\vec{0}^{\\,T} & 1\\end{bmatrix}}_{H}\\begin{bmatrix}\\vec{x}\\\\1\\end{bmatrix}",
+          "color": "purple",
+          "size": 32,
+          "maxW": 600,
+          "id": "homog"
+        }
+      ]
+    },
+    {
+      "id": "chain",
+      "title": "Chain the frames",
+      "narration": {
+        "en": {
+          "say": "A robot is a chain of frames: F to M one, M one to M two, and so on, one H per step. To get from the base to the gripper, multiply them in order. [pause] H equals H one, H two, H three, H four. That product is the forward kinematics of the whole arm.",
+          "show": "A robot is a chain of frames: F to M1, M1 to M2, and so on, one H per step. Base to gripper is the product in order: H = H1 H2 H3 H4. That is the forward kinematics of the whole arm."
+        },
+        "hi": {
+          "say": "Robot frames ki ek chain hai: F se M one, M one se M two, aur aage, har step par ek H. Base se gripper tak jaane ke liye, inhe order mein multiply karein. [pause] H equals H one, H two, H three, H four. Yahi product poori arm ki forward kinematics hai.",
+          "show": "Robot frames की एक chain है: F से M1, M1 से M2, और आगे, हर step पर एक H। Base से gripper तक: H = H1 H2 H3 H4, order में। यही पूरी arm की forward kinematics है।"
+        }
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "chain",
+          "x": 0,
+          "y": 60,
+          "tex": "F\\;\\xrightarrow{\\;H_1\\;}\\;M_1\\;\\xrightarrow{\\;H_2\\;}\\;M_2\\;\\xrightarrow{\\;H_3\\;}\\;M_3\\;\\xrightarrow{\\;H_4\\;}\\;M_4",
+          "color": "pink",
+          "size": 32,
+          "maxW": 640
+        },
+        {
+          "type": "math",
+          "region": "chain",
+          "x": 700,
+          "y": 60,
+          "tex": "H = H_1 H_2 H_3 H_4",
+          "color": "white",
+          "size": 34,
+          "maxW": 270,
+          "id": "prod"
+        },
+        {
+          "type": "ring",
+          "refs": [
+            "prod"
+          ],
+          "color": "coral",
+          "pad": 18
+        }
+      ]
+    },
+    {
+      "id": "example",
+      "title": "The RPR example",
+      "narration": {
+        "en": {
+          "say": "Here is the example from the lecture. An R P R robot: a rotation theta one at the base, a rotation theta two three units out, a prismatic slide of length ell two along a forty degree link, and a fixed minus thirty degree wrist four units further. [pause] Each one is a rotation and a shift, so each one is an H. Write them down base first, and H is the product. You do not even have to multiply it out to know where the gripper is.",
+          "show": "The lecture's RPR robot: rotate θ1 at the base, rotate θ2 three units out, slide l2 along a 40° link, then a fixed −30° wrist four units on. Each step is a rotation plus a shift, so each is one H. Base first, H is the product."
+        },
+        "hi": {
+          "say": "Yeh lecture ka example hai. Ek R P R robot: base par rotation theta one, teen units aage rotation theta two, chaalees degree wale link par ell two lambi prismatic slide, aur chaar units aage ek fixed minus tees degree wrist. [pause] Har ek rotation aur shift hai, toh har ek ek H hai. Base se shuru karke likhein, aur H inka product hai. Gripper kahan hai yeh jaanne ke liye multiply karna bhi zaroori nahi.",
+          "show": "Lecture का RPR robot: base पर θ1, तीन units आगे θ2, 40° link पर l2 की slide, फिर चार units आगे fixed −30° wrist। हर step rotation plus shift है, यानी एक H। Base से शुरू, H इनका product है।"
+        }
+      },
+      "draw": [
+        {
+          "type": "math",
+          "region": "chain",
+          "x": 0,
+          "y": 170,
+          "tex": "H=\\begin{bmatrix}A(\\theta_1)&\\begin{smallmatrix}4\\\\2\\end{smallmatrix}\\\\ \\vec{0}^{\\,T}&1\\end{bmatrix}\\begin{bmatrix}A(\\theta_2)&\\begin{smallmatrix}3\\\\0\\end{smallmatrix}\\\\ \\vec{0}^{\\,T}&1\\end{bmatrix}\\begin{bmatrix}A(40^\\circ)&\\begin{smallmatrix}l_2\\\\0\\end{smallmatrix}\\\\ \\vec{0}^{\\,T}&1\\end{bmatrix}\\begin{bmatrix}A(-30^\\circ)&\\begin{smallmatrix}4\\\\0\\end{smallmatrix}\\\\ \\vec{0}^{\\,T}&1\\end{bmatrix}",
+          "color": "purple",
+          "size": 30,
+          "maxW": 970
+        }
+      ]
+    },
+    {
+      "id": "takeaway",
+      "title": "Takeaway",
+      "narration": {
+        "en": {
+          "say": "So, in one line. Rotating a frame is a two by two matrix whose columns are where the axes went. Shifting it is a vector. Pack both into H, one per joint, multiply base first, and you can take any point from the gripper's world to the robot's world.",
+          "show": "Rotating a frame is a 2×2 matrix whose columns are where the axes went. Shifting it is a vector. Pack both into H, one per joint, multiply base first, and any point moves from the gripper's world to the robot's world."
+        },
+        "hi": {
+          "say": "Toh, ek line mein. Frame ko ghumana ek two by two matrix hai jiske columns batate hain axes kahan gayi. Shift karna ek vector hai. Dono ko H mein pack karein, har joint ke liye ek, base se multiply karein, aur koi bhi point gripper ki duniya se robot ki duniya mein aa jaata hai.",
+          "show": "Frame घुमाना एक 2×2 matrix है जिसके columns बताते हैं axes कहाँ गईं। Shift एक vector है। दोनों को H में pack करें, हर joint के लिए एक, base से multiply करें, और कोई भी point gripper की दुनिया से robot की दुनिया में आ जाता है।"
+        }
+      },
+      "draw": [
+        {
+          "type": "text",
+          "region": "math",
+          "x": 0,
+          "y": 548,
+          "text": "rotate, then shift: one H per joint, base first",
+          "color": "coral",
+          "size": 30
+        }
+      ]
+    }
+  ]
+}
